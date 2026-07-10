@@ -104,10 +104,29 @@ class LoginController {
 
         $token=s($_GET['token']);//s funcion para sanitizar
         //Buscar Usuario por su token
-        $usuario = Usuario::where('token', $token);
+        $usuario = Usuario::where('token', $token);//objeto usuario con la info de la base de datos
         if(empty($usuario)){
             Usuario::setAlerta('error','Token no valido');
             $error=true;
+        }
+
+        if($_SERVER['REQUEST_METHOD']==='POST'){
+            //Leer el nuevo password y guardarlo
+            $password=new Usuario($_POST);
+            $alertas=$password->ValidarPassword();
+
+            if(empty($alertas)){
+                $usuario->password=null;//borro el password anterior del objeto usuario(no de la base de datos)
+                $usuario->password= $password->password;//asigno el password del objeto password al objeto usuario
+                $usuario->hashPassword();//hasheamos el password
+                $usuario->token=null;;// cambiamos el token a null para que pase la validacion al ingresar
+                $resultado=$usuario->guardar();
+                if($resultado){//la funcion guardar devuelve un resultado
+                    header('Location:/');
+                }
+                debuguear($usuario);
+
+            }
         }
         
         $alertas=Usuario::getAlertas();
