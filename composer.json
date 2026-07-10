@@ -1,0 +1,22 @@
+{
+    "name": "jota/app-salon_php_mvc_js_sass",
+    "description": "proyecto mvc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Clases\\" : "./clases"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sebastian Belen",
+            "email": "szelemcode@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
+    }
+}
