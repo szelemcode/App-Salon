@@ -124,7 +124,7 @@ class LoginController {
                 if($resultado){//la funcion guardar devuelve un resultado
                     header('Location:/');
                 }
-                debuguear($usuario);
+                //debuguear($usuario);
 
             }
         }

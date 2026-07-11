@@ -405,6 +405,13 @@ p {
   padding: 3rem 0;
 }
 
+.seccion .text-center {
+  text-align: center;
+}
+.seccion:nth-child(2), .seccion:nth-child(3) {
+  display: none;
+}
+
 .formulario {
   margin-top: 5rem;
   width: 100%;
@@ -423,6 +430,11 @@ p {
   border: none;
   padding: 1.25rem;
   border-radius: 1rem;
+}
+.campo input:disabled {
+  background-color: rgb(108.875, 113.0625, 87.9375);
+  color: #FFFFFF;
+  cursor: not-allowed;
 }
 
 .boton {

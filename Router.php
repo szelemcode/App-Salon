@@ -28,7 +28,7 @@ class Router
 // exit;
         
         // Proteger Rutas...
-        session_start();
+        //session_start();
         
 
         // Arreglo de rutas protegidas...
