@@ -494,4 +494,30 @@ p {
 }
 .alerta.exito {
   background-color: #329f00;
+}
+
+@media (min-width: 768px) {
+  .tabs {
+    display: flex;
+  }
+}
+.tabs button {
+  background-color: #0da6f3;
+  border: none;
+  color: #FFFFFF;
+  padding: 1rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: background-color 300ms ease;
+}
+.tabs button:hover {
+  cursor: pointer;
+  background-color: rgb(9.6850393701, 133.1692913386, 195.3149606299);
+}
+.tabs button.actual {
+  background-color: #FFFFFF;
+  color: #0da6f3;
 }/*# sourceMappingURL=app.css.map */
