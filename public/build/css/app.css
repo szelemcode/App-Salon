@@ -530,6 +530,10 @@ p {
   background-color: #FFFFFF;
   color: #0da6f3;
 }
+.tabs button.actual:hover {
+  background-color: #999999;
+  color: #FFFFFF;
+}
 
 .paginacion {
   padding: 5rem 0;
@@ -542,4 +546,8 @@ p {
 }
 .paginacion button {
   margin: 0 0 1rem 0;
+}
+
+.ocultar {
+  visibility: hidden;
 }/*# sourceMappingURL=app.css.map */

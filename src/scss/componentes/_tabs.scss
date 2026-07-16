@@ -26,6 +26,10 @@
         &.actual{
             background-color: v.$blanco;
             color: v.$azul;
+            &:hover {
+                background-color: color.adjust(v.$blanco, $lightness: -40%);
+                color: v.$blanco;
+            }
         }
     }
 
