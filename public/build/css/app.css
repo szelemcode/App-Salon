@@ -405,10 +405,19 @@ p {
   padding: 3rem 0;
 }
 
+.seccion {
+  padding: 5rem 0;
+  display: none;
+}
 .seccion .text-center {
   text-align: center;
 }
-.seccion:nth-child(2), .seccion:nth-child(3) {
+
+.mostrar {
+  display: block;
+}
+
+.ocultar {
   display: none;
 }
 
@@ -520,4 +529,17 @@ p {
 .tabs button.actual {
   background-color: #FFFFFF;
   color: #0da6f3;
+}
+
+.paginacion {
+  padding: 5rem 0;
+}
+@media (min-width: 480px) {
+  .paginacion {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.paginacion button {
+  margin: 0 0 1rem 0;
 }/*# sourceMappingURL=app.css.map */
