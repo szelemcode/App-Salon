@@ -32,7 +32,7 @@
             <div class="campo">
                 <label for="fecha">Fecha</label>
                 <input
-                    id="fechda"
+                    id="fecha"
                     type="date">
             </div>
             <div class="campo">

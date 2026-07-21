@@ -1,6 +1,13 @@
 let paso=1;
 const pasoInicial= 1;
-cons=pasoFinal= 3;
+const pasoFinal= 3;
+
+const cita = {
+    nombre: '',
+    fecha: '',
+    hota: '',
+    servicios: [];
+}//objeto que se van a guardar para almacenar en la base de datos
 
 document.addEventListener('DOMContentLoaded',function(){
     iniciarApp();
@@ -11,7 +18,8 @@ function iniciarApp(){
     tabs();// Cambia la seccion cuando se presionan los tabs
     botonesPaginador(); //Agrega o quita los botones del paginador
     paginaSiguiente();//Manda a la pagina siguiente
-    paginaAnterior()//manda a la pagina anterior
+    paginaAnterior();//manda a la pagina anterior
+    consultarAPI(); // consulta la Api en el backend de php
 }
 
 function mostrarSeccion(){//muestra el paso que esta activo y lo muestra
@@ -48,7 +56,7 @@ function tabs(){
             botonesPaginador();//llama a la funcion para que se muestren o no los botones de la paginacion
         });
     });
-    
+
 }
 
 function botonesPaginador(){
@@ -64,8 +72,8 @@ function botonesPaginador(){
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.remove('ocultar');
     }
-     
-    mostrarSeccion();//esto es para cuando esta funcion sea llamada por pagina anterior 
+
+    mostrarSeccion();//esto es para cuando esta funcion sea llamada por pagina anterior
     //o paginaSiguiente me muestre la seccion correspondiente
 }
 
@@ -81,10 +89,52 @@ function paginaAnterior(){
 
 function paginaSiguiente(){
     const paginaSiguiente=document.querySelector('#siguiente');
-    paginaSiguiente.addEventListener('click',()=>{// 
+    paginaSiguiente.addEventListener('click',()=>{//
         if(paso>=pasoFinal)return;
         paso++;
         botonesPaginador();//logica para mostrar el paginador
     });
 
+}
+
+async function consultarAPI(){
+    try {
+        const url='http://localhost:3000/api/servicios';
+        const resultado= await fetch(url);
+        const servicios= await resultado.json();
+        mostrarServicios(servicios);
+
+    } catch (error) {
+        console.log('error');
+    }
+
+}
+
+ function mostrarServicios(servicios){
+     servicios.forEach(servicio=>{
+         const {id, nombre, precio} = servicio;//destructuring
+         //console.log(id);
+         const nombreServicio= document.createElement('P');
+         nombreServicio.classList.add('nombre-servicio');
+         nombreServicio.textContent = nombre
+         const precioServicio= document.createElement('P');
+         precioServicio.classList.add('precio-servicio');
+         precioServicio.textContent = `$${precio}`
+         const servicioDiv= document.createElement('DIV');
+         servicioDiv.classList.add('servicio');
+         servicioDiv.dataset.idServicio= id;
+        //  servicioDiv.onclick = seleccionarServicio;// no se pone () porque sino se llamaria enseguida
+         servicioDiv.onclick = function(){
+                seleccionarServicio(servicio);
+         }
+         servicioDiv.appendChild(nombreServicio);
+         servicioDiv.appendChild(precioServicio);
+         document.querySelector('#servicios').appendChild(servicioDiv)
+         
+     });
+ }
+
+
+function seleccionarServicio(servicio){
+    console.log(servicio);
 }
