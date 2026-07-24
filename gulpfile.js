@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'path' //ayuda a las rutas entre sistemas operativos diferentes
 import fs from 'fs'
 import { glob } from 'glob'
 import { src, dest, watch, series } from 'gulp'
@@ -10,7 +10,7 @@ import sharp from 'sharp'
 const sass = gulpSass(dartSass)
 
 const paths = {
-    scss: 'src/scss/**/*.scss',
+    scss: 'src/scss/**/*.scss', // **/* esto es un patron de busqueda(glob pattern)le dice que archivos debe buscar
     js: 'src/js/**/*.js'
 }
 
@@ -23,11 +23,25 @@ export function css( done ) {
     done()
 }
 
-export function js( done ) {
-    src(paths.js)
-      .pipe(terser())
-      .pipe(dest('./public/build/js'))
-    done()
+// export function js( done ) {
+//     src(paths.js)
+//       .pipe(terser())
+//       .pipe(dest('./public/build/js'))
+//     done()
+// }
+
+export function js() {//funcion para detectar si hay un error
+    return src(paths.js)
+        .pipe(terser())
+        .on('error', function(error) {
+            console.error('ERROR EN JAVASCRIPT:');
+            console.error(error.message);
+            console.error(error.filename);
+            console.error('Línea:', error.line);
+            console.error('Columna:', error.col);
+            this.emit('end');
+        })
+        .pipe(dest('./public/build/js'));
 }
 
 export async function imagenes(done) {

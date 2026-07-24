@@ -5,8 +5,8 @@ const pasoFinal= 3;
 const cita = {
     nombre: '',
     fecha: '',
-    hota: '',
-    servicios: [];
+    hora: '',
+    servicios: []
 }//objeto que se van a guardar para almacenar en la base de datos
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -20,6 +20,11 @@ function iniciarApp(){
     paginaSiguiente();//Manda a la pagina siguiente
     paginaAnterior();//manda a la pagina anterior
     consultarAPI(); // consulta la Api en el backend de php
+    nombreCliente();// agrega el nombre del cliente al objeto de cita
+    seleccionarFecha();//agrega la fecha de la cita en el objeto
+    seleccionarHora();//agrega la hora de la cita en el objeto
+    //mostrarResumen();//Muestra el resumen de la cita no hace falta iniciarlo aca
+    //se llama en el paso 3 y la seccion de inicio esta en el paso 1
 }
 
 function mostrarSeccion(){//muestra el paso que esta activo y lo muestra
@@ -51,6 +56,8 @@ function tabs(){
     const botones = document.querySelectorAll('.tabs button');//hay que iterar para que recorra los valores
     botones.forEach(boton=>{
         boton.addEventListener('click',function(e){
+            e.preventDefault();
+
             paso = parseInt(e.target.dataset.paso);//cambia el string que se obtuvo y lo guardo en paso
             mostrarSeccion();
             botonesPaginador();//llama a la funcion para que se muestren o no los botones de la paginacion
@@ -63,12 +70,16 @@ function botonesPaginador(){
     const paginaAnterior=document.querySelector('#anterior');
     const paginaSiguiente=document.querySelector('#siguiente');
     if(paso === 1){
+        //console.log('estoy en el paso: ', paso);
         paginaAnterior.classList.add('ocultar');
         paginaSiguiente.classList.remove('ocultar');
     }else if(paso === 3){
+        //console.log('estoy en el paso: ',paso);
         paginaAnterior.classList.remove('ocultar');
          paginaSiguiente.classList.add('ocultar');
+         mostrarResumen();
     }else{
+        //console.log('estoy en el paso: ',paso);
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.remove('ocultar');
     }
@@ -124,7 +135,7 @@ async function consultarAPI(){
          servicioDiv.classList.add('servicio');
          servicioDiv.dataset.idServicio= id;
         //  servicioDiv.onclick = seleccionarServicio;// no se pone () porque sino se llamaria enseguida
-         servicioDiv.onclick = function(){
+         servicioDiv.onclick = function(){//call back
                 seleccionarServicio(servicio);
          }
          servicioDiv.appendChild(nombreServicio);
@@ -132,9 +143,105 @@ async function consultarAPI(){
          document.querySelector('#servicios').appendChild(servicioDiv)
          
      });
- }
-
+ }////
 
 function seleccionarServicio(servicio){
-    console.log(servicio);
+    const {id} = servicio;//extraigo el id de servicio con destructuring
+    const {servicios} = cita;///destructuring creo una variable[] servicios con los valores del objeto cita
+
+    //Selector que identifica el elemento ,identifica el elemento que se le da click
+    const servicioDiv=document.querySelector(`[data-id-servicio="${id}"]`);
+   
+   //Comprobar si un servicio ya fue agregado
+   if(servicios.some(agregado =>agregado.id === id) ) {
+    //eliminarlo
+    cita.servicios = servicios.filter(agregado => agregado.id !=id);
+    servicioDiv.classList.remove('seleccionado');
+   }else{
+    //agregarlo
+    cita.servicios = [...servicios,servicio];//rest operator tomo una copia de los servicios y ke agrego el servvicio a agregar
+    servicioDiv.classList.add('seleccionado');
+    }
+    console.log(cita);
 }
+
+function nombreCliente(){
+    cita.nombre=document.querySelector('#nombre').value;
+    //const nombre=document.querySelector('#nombre').value; // forma larga
+    //cita.nombre=nombre;
+    console.log(cita);
+}
+
+function seleccionarFecha(){
+    const inputFecha=document.querySelector('#fecha');
+    inputFecha.addEventListener('input',function(e){
+       //console.log(e.target.value);
+       const dia = new Date(e.target.value).getUTCDay();
+       if([6,0].includes(dia)) {//busca los numeros 6 y 0 en dia
+        e.target.value=''; //si exsite seteo el value para que no lo puedan elegir
+       mostrarAlerta('Fines de semanas no permitidos', 'error', '.formulario');//llamamos a esta funcion para no cargar mucho esta y que muestre una alerta
+       }else{
+        cita.fecha=inputFecha.value;
+       }
+    });
+}
+
+function seleccionarHora(){
+    const inputHora=document.querySelector('#hora');
+    inputHora.addEventListener('input',function(e){
+        //cita.hora=e.target.value;
+        const horaCita=e.target.value;
+        const hora=horaCita.split(":")[0];
+        if(hora  <10 || hora> 18 ){
+        mostrarAlerta('Hora no valida','error','.formulario');
+        e.target.value='';//hacemos esto para que no quede la hora no valida en el input
+        }else{
+            cita.hora=hora;
+            //console.log('hora valida')
+        }
+
+    });
+   // console.log(horaSeleccionada);
+
+} 
+
+function mostrarAlerta(mensaje, tipo, elemento, desaparece = true){//de esta manera se puede reutilizar
+    //Previene que se genere mas de una alerta
+    const alertaPrevia=document.querySelector('.alerta'); //controlamos que solo haya una alerta
+    if(alertaPrevia) //return;//si hay una alerta detengo el codigo esto es si tuvieramos alguna
+    //que desaparece , pero ahora tenemos una que queda fija
+    {
+        alertaPrevia.remove();
+    }
+
+    //Scripting para crear la alerta
+    const alerta=document.createElement('DIV');
+    alerta.textContent=mensaje;
+    alerta.classList.add('alerta');
+    alerta.classList.add(tipo);
+
+    const referencia=document.querySelector(elemento);
+    referencia.appendChild(alerta);
+
+    //Eliminar la alerta
+    if(desaparece){ // si desaparece esta por default elimina la alerta
+        setTimeout(() => {
+        alerta.remove();
+    },3000);
+    }
+    
+        
+}
+
+  function mostrarResumen(){
+      const resumen = document.querySelector('.contenido-resumen')
+      //console.log(cita.servicios.length);
+      if(Object.values(cita).includes('') || cita.servicios.length === 0 ){//
+          mostrarAlerta('Faltan datos de servicios, Fecha u Hora', 'error','.contenido-resumen',false);
+      }else{
+          document.querySelector('.alerta').remove();
+          mostrarAlerta('Agendado Correctamente', 'exito','.contenido-resumen');
+          console.log('resumen correcto');
+      }
+  }
+

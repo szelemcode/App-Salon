@@ -20,6 +20,12 @@
             @include m.tablet{
                 text-align: left;
             }
+        &.seleccionado {
+            background-color: v.$azul;
+            p{
+                color: v.$blanco;
+            } 
+        }
         
         &:hover{
             transform: scale(1.1);
@@ -35,5 +41,17 @@
             margin: 0;
         }
 
+        
+
+    }
+
+    
+
+   
+}
+
+.contenido-resumen{
+    p{
+        text-align: center;
     }
 }

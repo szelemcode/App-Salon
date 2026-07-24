@@ -445,6 +445,12 @@ p {
     text-align: left;
   }
 }
+.listado-servicios .servicio.seleccionado {
+  background-color: #0da6f3;
+}
+.listado-servicios .servicio.seleccionado p {
+  color: #FFFFFF;
+}
 .listado-servicios .servicio:hover {
   transform: scale(1.1);
 }
@@ -457,6 +463,10 @@ p {
   font-weight: 700;
   font-size: 3rem;
   margin: 0;
+}
+
+.contenido-resumen p {
+  text-align: center;
 }
 
 .formulario {
