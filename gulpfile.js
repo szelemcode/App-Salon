@@ -84,7 +84,7 @@ function procesarImagenes(file, outputSubDir) {
 export function dev() {
     watch( paths.scss, css );
     watch( paths.js, js );
-    watch('src/img/**/*.{png,jpg}', imagenes)
+    watch('src/img/**/*.{png,jpg,jpeg,svg}', imagenes)
 }
 
 export default series( js, css, imagenes, dev )

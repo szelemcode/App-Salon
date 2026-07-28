@@ -77,7 +77,8 @@ function botonesPaginador(){
         //console.log('estoy en el paso: ',paso);
         paginaAnterior.classList.remove('ocultar');
          paginaSiguiente.classList.add('ocultar');
-         mostrarResumen();
+        mostrarResumen();
+    
     }else{
         //console.log('estoy en el paso: ',paso);
         paginaAnterior.classList.remove('ocultar');
@@ -233,15 +234,76 @@ function mostrarAlerta(mensaje, tipo, elemento, desaparece = true){//de esta man
         
 }
 
-  function mostrarResumen(){
+function mostrarResumen(){
       const resumen = document.querySelector('.contenido-resumen')
+
+      //resumen.innerHTML='';
+      //limpiar el contenido de resumen
+    while(resumen.firstChild){
+        resumen.removeChild(resumen.firstChild);//
+    }
       //console.log(cita.servicios.length);
       if(Object.values(cita).includes('') || cita.servicios.length === 0 ){//
           mostrarAlerta('Faltan datos de servicios, Fecha u Hora', 'error','.contenido-resumen',false);
-      }else{
-          document.querySelector('.alerta').remove();
-          mostrarAlerta('Agendado Correctamente', 'exito','.contenido-resumen');
-          console.log('resumen correcto');
-      }
-  }
+        return;
+    }
+
+    //formatear el div de resumen
+    const{nombre,fecha,hora,servicios}=cita; //destructuring 
+
+    const nombreCliente=document.createElement('P');
+        nombreCliente.innerHTML=`<span>Nomre:</span>${nombre}`;
+
+        const fechaCita=document.createElement('P');
+        fechaCita.innerHTML=`<span>Fecha:</span>${fecha}`;
+
+       const horaCita=document.createElement('P');
+        horaCita.innerHTML=`<span>Hora:</span>${hora}`;
+
+        resumen.appendChild(nombreCliente);
+        resumen.appendChild(fechaCita);
+        resumen.appendChild(horaCita);
+
+        servicios.forEach(servicio=>{
+            const{id,precio,nombre}=servicio;//destructuring a cada pasada del foreach
+            const contenedorServicios=document.createElement('DIV');
+            contenedorServicios.classList.add('contenedor-servicio');
+            
+            const textoServicio=document.createElement('P');
+            textoServicio.textContent=nombre;
+
+            const precioServicio=document.createElement('P');
+            precioServicio.innerHTML=`<span>Precio:</span>$ ${precio}`;
+
+            contenedorServicios.appendChild(textoServicio);
+            contenedorServicios.appendChild(precioServicio);
+
+            resumen.appendChild(contenedorServicios); 
+            })
+        
+       
+        
+       
+
+        // console.log(nombreCliente);
+        // console.log(fechaCliente);
+        // console.log(horaCliente);
+        // console.log(serviciosCliente);
+
+
+}
+
+//   function mostrarResumen(){ esta funciona la hice yo pero no es la del tutorial
+//       const resumen = document.querySelector('.contenido-resumen')
+//       //console.log(cita.servicios.length);
+//       if(Object.values(cita).includes('') || cita.servicios.length === 0 ){//
+//           mostrarAlerta('Faltan datos de servicios, Fecha u Hora', 'error','.contenido-resumen',false);
+//       }else{
+           
+//           document.querySelector('.alerta')?.remove();//forma corta de preguntar si existe alerta y si existe removerla
+//           mostrarAlerta('Agendado Correctamente', 'exito','.contenido-resumen');
+//           console.log('resumen correcto');
+//       }
+//     }
+  
 
