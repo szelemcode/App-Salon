@@ -438,11 +438,11 @@ p {
   border-radius: 1rem;
   transition-property: transform;
   transition-duration: 300ms;
-  text-align: center;
+  text-align: left;
 }
 @media (min-width: 768px) {
   .listado-servicios .servicio {
-    text-align: left;
+    text-align: center;
   }
 }
 .listado-servicios .servicio.seleccionado {
@@ -466,7 +466,27 @@ p {
 }
 
 .contenido-resumen p {
-  text-align: center;
+  text-align: left;
+}
+
+.contenido-resumen {
+  text-align: left;
+}
+.contenido-resumen p {
+  margin-bottom: 1rem;
+}
+.contenido-resumen span {
+  color: #0da6f3;
+  font-weight: 700;
+  font-size: 2.4rem;
+}
+
+.contenedor-servicio {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 3rem 0;
+}
+.contenedor-servicio:last-of-type {
+  margin-bottom: 5rem;
 }
 
 .formulario {

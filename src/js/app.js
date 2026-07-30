@@ -197,7 +197,7 @@ function seleccionarHora(){
         mostrarAlerta('Hora no valida','error','.formulario');
         e.target.value='';//hacemos esto para que no quede la hora no valida en el input
         }else{
-            cita.hora=hora;
+            cita.hora=horaCita;
             //console.log('hora valida')
         }
 
@@ -251,19 +251,12 @@ function mostrarResumen(){
     //formatear el div de resumen
     const{nombre,fecha,hora,servicios}=cita; //destructuring 
 
-    const nombreCliente=document.createElement('P');
-        nombreCliente.innerHTML=`<span>Nomre:</span>${nombre}`;
+        //Headding para servicios en resumen
+        const headingServicio = document.createElement('H3');
+        headingServicio.textContent = 'Resumen de Servicios';
+        resumen.appendChild(headingServicio);
 
-        const fechaCita=document.createElement('P');
-        fechaCita.innerHTML=`<span>Fecha:</span>${fecha}`;
-
-       const horaCita=document.createElement('P');
-        horaCita.innerHTML=`<span>Hora:</span>${hora}`;
-
-        resumen.appendChild(nombreCliente);
-        resumen.appendChild(fechaCita);
-        resumen.appendChild(horaCita);
-
+        //iterando y mostrando los servicios
         servicios.forEach(servicio=>{
             const{id,precio,nombre}=servicio;//destructuring a cada pasada del foreach
             const contenedorServicios=document.createElement('DIV');
@@ -273,37 +266,55 @@ function mostrarResumen(){
             textoServicio.textContent=nombre;
 
             const precioServicio=document.createElement('P');
-            precioServicio.innerHTML=`<span>Precio:</span>$ ${precio}`;
+            precioServicio.innerHTML=`<span>Precio:</span>$${precio}`;
 
             contenedorServicios.appendChild(textoServicio);
             contenedorServicios.appendChild(precioServicio);
 
             resumen.appendChild(contenedorServicios); 
             })
+
+        //Headding para citas
+        const headingCita = document.createElement('H3');
+        headingCita.textContent = 'Resumen de Cita';
+        resumen.appendChild(headingCita);
+
+        const nombreCliente=document.createElement('P');
+        nombreCliente.innerHTML=`<span>Nombre:</span>${nombre}`;
+
+        //Formatear la fecha
+        const fechaObj= new Date(fecha); //fecha que selecciono el usuario
+        const mes=fechaObj.getMonth();
+        const dia=fechaObj.getDate()+2;//cada vez que se intancia un new date el dia queda un dia desfasado ya se arreglo
+        const year=fechaObj.getFullYear();
+
+        const fechaUTC=new Date(Date.UTC(year, mes, dia));
+        const opciones={weekday: 'long', year: 'numeric', month: 'long', day:'numeric'};
+        const fechaFormateada= fechaUTC.toLocaleDateString('es-MX',opciones);
+        console.log(fechaUTC);
+        console.log(fechaFormateada);
+
+        const fechaCita=document.createElement('P');
+        fechaCita.innerHTML=`<span>Fecha:</span>${fechaFormateada}`;
+
+       const horaCita=document.createElement('P');
+        horaCita.innerHTML=`<span>Hora:</span>${hora} horas`;
+
+        //Boton para crear una cita
+
+        const botonReservar=document.createElement('BUTTON');
+        botonReservar.classList.add('boton');
+        botonReservar.textContent='Reservar Cita';
+        botonReservar.onclick=reservarCita;
+
+        resumen.appendChild(nombreCliente);
+        resumen.appendChild(fechaCita);
+        resumen.appendChild(horaCita);
         
-       
-        
-       
-
-        // console.log(nombreCliente);
-        // console.log(fechaCliente);
-        // console.log(horaCliente);
-        // console.log(serviciosCliente);
-
-
+        resumen.appendChild(botonReservar);
 }
-
-//   function mostrarResumen(){ esta funciona la hice yo pero no es la del tutorial
-//       const resumen = document.querySelector('.contenido-resumen')
-//       //console.log(cita.servicios.length);
-//       if(Object.values(cita).includes('') || cita.servicios.length === 0 ){//
-//           mostrarAlerta('Faltan datos de servicios, Fecha u Hora', 'error','.contenido-resumen',false);
-//       }else{
-           
-//           document.querySelector('.alerta')?.remove();//forma corta de preguntar si existe alerta y si existe removerla
-//           mostrarAlerta('Agendado Correctamente', 'exito','.contenido-resumen');
-//           console.log('resumen correcto');
-//       }
-//     }
-  
-
+       
+        
+       function reservarCita(){
+        console.log('reservando cita');
+       }

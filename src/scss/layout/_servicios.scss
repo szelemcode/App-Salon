@@ -1,5 +1,5 @@
-@use '../base/variables' as v;
-@use '../base/mixins' as m;
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
 @use 'sass:color';
 
 .listado-servicios{
@@ -16,9 +16,9 @@
         border-radius: 1rem;
         transition-property: transform;
         transition-duration: 300ms;
-        text-align: center;
+        text-align: left;
             @include m.tablet{
-                text-align: left;
+                text-align: center;
             }
         &.seleccionado {
             background-color: v.$azul;
@@ -52,6 +52,6 @@
 
 .contenido-resumen{
     p{
-        text-align: center;
+        text-align: left;
     }
 }
