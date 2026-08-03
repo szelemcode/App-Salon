@@ -163,7 +163,7 @@ function seleccionarServicio(servicio){
     cita.servicios = [...servicios,servicio];//rest operator tomo una copia de los servicios y ke agrego el servvicio a agregar
     servicioDiv.classList.add('seleccionado');
     }
-    console.log(cita);
+    //console.log(cita);
 }
 
 function nombreCliente(){
@@ -315,6 +315,32 @@ function mostrarResumen(){
 }
        
         
-       function reservarCita(){
-        console.log('reservando cita');
+      async function reservarCita(){
+        const { nombre, fecha, hora, servicios}=cita;//destructuring
+        const idServicios=servicios.map(servicio=>servicio.id);
+        //console.log(idServicios);
+        
+       const datos = new FormData();
+       datos.append('nombre',nombre);
+       datos.append('fecha',fecha);
+       datos.append('hora',hora);
+       datos.append('servicios',idServicios);
+
+       //console.log([...datos]);//rest operator
+       
+
+       //Peticion a la Api
+       const url = 'http://localhost:3000/api/citas';
+
+       const respuesta = await fetch(url,{
+            method : 'POST',
+            body: datos
+       });
+
+       const resultado= await respuesta.json();
+
+
+        console.log(resultado);
+       //console.log([...datos]);
+
        }
