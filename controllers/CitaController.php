@@ -10,7 +10,8 @@ class CitaController{
         //debuguear($_SESSION);
 
         $router->render('cita/index',[
-            'nombre'=>$_SESSION['nombre']
+            'nombre'=>$_SESSION['nombre'],
+            'id'=>$_SESSION['id'] // de esta forma la variable va a estar disponible en la vista
 
         ]);
         

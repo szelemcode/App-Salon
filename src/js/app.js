@@ -3,6 +3,7 @@ const pasoInicial= 1;
 const pasoFinal= 3;
 
 const cita = {
+    id:'',
     nombre: '',
     fecha: '',
     hora: '',
@@ -19,7 +20,10 @@ function iniciarApp(){
     botonesPaginador(); //Agrega o quita los botones del paginador
     paginaSiguiente();//Manda a la pagina siguiente
     paginaAnterior();//manda a la pagina anterior
+
     consultarAPI(); // consulta la Api en el backend de php
+
+    idCliente();//
     nombreCliente();// agrega el nombre del cliente al objeto de cita
     seleccionarFecha();//agrega la fecha de la cita en el objeto
     seleccionarHora();//agrega la hora de la cita en el objeto
@@ -164,6 +168,10 @@ function seleccionarServicio(servicio){
     servicioDiv.classList.add('seleccionado');
     }
     //console.log(cita);
+}
+
+function idCliente(){
+    cita.id=document.querySelector('#id').value;
 }
 
 function nombreCliente(){
