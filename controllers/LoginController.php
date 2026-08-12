@@ -56,7 +56,9 @@ class LoginController {
     }
 
     public static function logout(){
-        echo "Desde logout";
+        //session_start(); // esta linea no es necesaria ya que la llamo desde includes/app.php
+        $_SESSION = [];//limpio la sesion
+        header('location: /');
     }
 
     public static function olvide(Router $router){
