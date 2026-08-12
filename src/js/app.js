@@ -23,7 +23,7 @@ function iniciarApp(){
 
     consultarAPI(); // consulta la Api en el backend de php
 
-    idCliente();//
+    idCliente();//asigna el id al objeto
     nombreCliente();// agrega el nombre del cliente al objeto de cita
     seleccionarFecha();//agrega la fecha de la cita en el objeto
     seleccionarHora();//agrega la hora de la cita en el objeto
@@ -324,31 +324,56 @@ function mostrarResumen(){
        
         
       async function reservarCita(){
-        const { nombre, fecha, hora, servicios}=cita;//destructuring
+        const { id, fecha, hora, servicios}=cita;//destructuring
         const idServicios=servicios.map(servicio=>servicio.id);
         //console.log(idServicios);
         
        const datos = new FormData();
-       datos.append('nombre',nombre);
+       datos.append('usuarioId',id);
        datos.append('fecha',fecha);
        datos.append('hora',hora);
        datos.append('servicios',idServicios);
 
        //console.log([...datos]);//rest operator
        
+        try {
+            //Peticion a la Api
+            const url = 'http://localhost:3000/api/citas';
 
-       //Peticion a la Api
-       const url = 'http://localhost:3000/api/citas';
+            const respuesta = await fetch(url,{
+                 method : 'POST',
+                 body: datos
+            });
+        
+            const resultado= await respuesta.json();
+        
+             console.log(resultado.resultado);//el resultado es la llave de active record que devuelve la funcion guardar
+            //console.log([...datos]);
+            //si vas a mostrar un msj de error utilizando fetch api no lo puedes evaluar de esta forma, porqeu no va a 
+            //existir ese resultado.resultado porque el endpoint no seria el registrado
+            if(resultado.resultado){
+                Swal.fire({
+                    icon: "success",//estaba "error"
+                    title: "Cita Creada",
+                    text: "Tu cita fue creada correctamente",
+                    //footer: "<a href=\"#\">Why do I have this issue?</a>" // esta parte la quitamos
+                    button: 'OK' // esta propiedad la agregamos
+                    //});//podemos dejarlo aca pero para limpiar podemos hacer lo siguiente
+                }).then( () => {
+                setTimeout(() => {
+                    window.location.reload();
+                },2000);//muy lento
+                })
+               
+            }
+        } catch (error) {
+            Swal.fire({
+             icon: "error",
+             title: "Error",
+             text: "hubo un error al guardar la cita"
+             //footer: "<a href=\"#\">Why do I have this issue?</a>"
+            });
+        }
+       
 
-       const respuesta = await fetch(url,{
-            method : 'POST',
-            body: datos
-       });
-
-       const resultado= await respuesta.json();
-
-
-        console.log(resultado);
-       //console.log([...datos]);
-
-       }
+     }

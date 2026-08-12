@@ -214,6 +214,8 @@ class ActiveRecord {                          // Clase padre que heredarán los 
 
         $query .= " ') ";                                // Cierra VALUES
 
+        //return json_encode(['query' => $query]); // descomentar para usar esto imprimira la consulta que estamos llamando forma de debuguear los llamados fetch
+
         $resultado = self::$db->query($query);           // Ejecuta consulta
 
         return [                                         // Devuelve información
