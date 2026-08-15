@@ -195,6 +195,12 @@ class ActiveRecord {                          // Clase padre que heredarán los 
         return array_shift( $resultado ) ;               // Devuelve el primer resultado
     }
 
+    //Consulta plana de SQL
+    public static function SQL($query) {                   // toma como parametro la consulta
+        $resultado = self::consultarSQL($query);         // Ejecuta consulta
+        return $resultado;
+    }
+
 
     // =========================
     // CREAR REGISTRO
