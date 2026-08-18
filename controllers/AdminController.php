@@ -6,6 +6,8 @@ use MVC\Router;
 
 class AdminController{
     public static function index(Router $router){
+
+        isAuth();
         //session_start();
         //consultar base de datos
         $consulta = "SELECT citas.id, citas.hora, CONCAT( usuarios.nombre, ' ', usuarios.apellido) as cliente, ";
@@ -20,10 +22,10 @@ class AdminController{
        // $consulta .= " WHERE fecha =  '${fecha}' ";
 
        $citas = AdminCita::SQL($consulta);
-       debuguear($citas);
         
         $router->render('admin/index',[
-            'nombre'=> $_SESSION['nombre']
+            'nombre'=> $_SESSION['nombre'],
+            'citas'=> $citas
         ]);
         }
 }

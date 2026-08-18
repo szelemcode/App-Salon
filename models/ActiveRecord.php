@@ -100,7 +100,7 @@ class ActiveRecord {                          // Clase padre que heredarán los 
             $atributos[$columna] = $this->$columna;      // Guarda columna => valor
         }
 
-        return $atributos;                               // Devuelve atributos del objeto
+        return $atributos;                               // Devxcccccccxj,.................uelve atributos del objeto
     }
 
 
