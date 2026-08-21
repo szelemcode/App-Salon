@@ -22,7 +22,8 @@ include_once __DIR__ .'/../templates/barra.php';
             foreach( $citas as $key =>$cita ){
                 //debuguear($key);
 
-                if($idCita !== $cita->id){
+                if($idCita !== $cita->id){ //si es distinto
+                    $total = 0;//total a pagar se reinicia con el nuevo id
         ?>      
             <li>
                 <p>ID: <span><?php echo $cita->id ?></span></p>
@@ -33,7 +34,8 @@ include_once __DIR__ .'/../templates/barra.php';
                 <h3>Servicios</h3>
                  <?php 
                  $idCita = $cita->id; 
-                 }  //FIN DEL IF ?>
+                 }  //FIN DEL IF 
+                 $total += $cita->precio ?>
                     <p class="servicio"><?php echo $cita->servicio . " " . $cita->precio ?></p>
             <!-- </li> -->
             <!-- si agrego el cierre me deja una separacion , html despues lo hace solo y corrige esa falla -->
@@ -41,11 +43,9 @@ include_once __DIR__ .'/../templates/barra.php';
         $actual = $cita->id;
         $proximo = $citas[$key + 1]->id ?? 0;
 
-        echo "<hr>";
-        echo $actual;
-        echo "<hr>";
-        echo $proximo;
-        ?>           
-        <?php } //FIN DEL FOREACH ?>
+        if(esUltimo($actual,$proximo)){ ?>
+            <p class="total">Total: $<span><?php echo $total ?></span></p>
+        <?php }
+        } //FIN DEL FOREACH ?>
     </ul>
 </div>
