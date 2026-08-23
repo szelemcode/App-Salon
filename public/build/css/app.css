@@ -316,19 +316,23 @@ html {
 
 body {
   min-height: 100%;
+}
+@media (min-width: 768px) {
+  body {
+    height: 100%;
+  }
+}
+body {
   display: flex;
   flex-direction: column;
   background-color: #1a1b15;
   color: #FFFFFF;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.6rem;
 }
 
 .contenedor {
@@ -403,6 +407,11 @@ p {
   width: 95%;
   margin: 0 auto;
   padding: 3rem 0;
+}
+@media (min-width: 768px) {
+  .contenedor-app .app {
+    overflow: scroll;
+  }
 }
 
 .barra {
@@ -596,6 +605,33 @@ p {
 }
 .boton:hover {
   background-color: rgb(9.6850393701, 133.1692913386, 195.3149606299);
+  cursor: pointer;
+}
+
+.boton-eliminar {
+  background-color: #cb0000;
+  padding: 1.5rem 4rem;
+  color: #FFFFFF;
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-weight: 400;
+  display: inline-block;
+  font-weight: 700;
+  border: none;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin: 5rem 0;
+}
+@media (min-width: 768px) {
+  .boton-eliminar {
+    width: auto;
+  }
+}
+.boton-eliminar:hover {
+  background-color: #980000;
   cursor: pointer;
 }
 

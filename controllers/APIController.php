@@ -37,6 +37,10 @@ use Model\Servicios;
             echo json_encode(['resultado' => $resultado]);
 
          }
+
+         public static function eliminar(){
+           debuguear($_POST);
+         }
     }
     
 ?>
