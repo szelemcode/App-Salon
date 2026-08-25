@@ -6,8 +6,8 @@ use MVC\Router;
 
 class AdminController{
     public static function index(Router $router){
+        isAdmin();
 
-       
         $fecha=$_GET['fecha'] ?? $fecha = date('Y-m-d');//busca la fecha en el get y si no hay toma la 
         //fecha actual del servidor;
         $fechas=explode('-', $fecha);
@@ -15,7 +15,6 @@ class AdminController{
             header('location:/404');
         }
 
-        isAuth();
         //session_start();
         
         //consultar base de datos
