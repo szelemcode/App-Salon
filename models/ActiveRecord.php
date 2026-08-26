@@ -214,11 +214,11 @@ class ActiveRecord {                          // Clase padre que heredarán los 
 
         $query .= join(', ', array_keys($atributos));    // Agrega columnas
 
-        $query .= " ) VALUES (' ";                       // Abre VALUES
+        $query .= " ) VALUES ('";                       // Abre VALUES
 
         $query .= join("', '", array_values($atributos));// Agrega valores
 
-        $query .= " ') ";                                // Cierra VALUES
+        $query .= "')";                                // Cierra VALUES
 
         //return json_encode(['query' => $query]); // descomentar para usar esto imprimira la consulta que estamos llamando forma de debuguear los llamados fetch
 

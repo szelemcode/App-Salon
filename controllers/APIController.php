@@ -8,7 +8,7 @@ use Model\Servicios;
     class APIController{
         public static function index(){
             $servicios=Servicios::all();
-            echo(json_encode($servicios));//linea importatne porque incerta los sercvicios
+            echo(json_encode($servicios));//linea importante porque incerta los sercvicios
            // debuguear($servicios);
         }
         public static function guardar(){
