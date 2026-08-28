@@ -586,6 +586,7 @@ p {
 .campo {
   display: flex;
   margin-bottom: 2rem;
+  margin-right: 1rem;
   align-items: center;
 }
 .campo label {

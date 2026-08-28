@@ -36,7 +36,9 @@ class Router
 
         // $auth = $_SESSION['login'] ?? null;
 
-        $currentUrl = $_SERVER['PATH_INFO'] ?? '/';
+        //$currentUrl = $_SERVER['PATH_INFO'] ?? '/';
+        //$currentUrl = strtoke($_SERVER['REQUEST_URI'],'?') ?? '/'; //opcion del tutorial extrae antes del ?
+        $currentUrl =parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);//extrae solo el path
        // $currentUrl = $_SERVER['REQUEST_URI'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
